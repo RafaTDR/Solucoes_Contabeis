@@ -1,0 +1,12 @@
+{% extends 'file/base.html' %}
+{% block body %}
+
+        <a href="{% url 'download' %}" download="">Baixar</a>
+
+
+ {% if upload_file_path %}
+    <a href="{{ excel }}" target="_blank" download="{{ excel }}" >Baixar</a>
+    Uploaded at: <label class="text-primary">{{ upload_file_path }} </label>
+ {% endif %}
+
+{% endblock %}

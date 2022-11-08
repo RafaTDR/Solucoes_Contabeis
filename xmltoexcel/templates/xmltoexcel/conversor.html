@@ -1,0 +1,30 @@
+{% extends "model-page.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-center">
+
+        <a href="{% url "xmltoexcel:conversornfe" %}" class="btn btn-outline-secondary btn-lg" style="float: center;
+                                                        margin-bottom: 15px; width:50%;">NFE</a>
+
+    </div>
+
+    <div class="d-flex justify-content-center">
+
+        <a href="{% url "xmltoexcel:conversorcte" %}" class="btn btn-outline-secondary btn-lg" style="float: center;
+                                                        margin-bottom: 15px; width:50%;">CTE</a>
+
+    </div>
+
+    <div class="d-flex justify-content-center">
+
+        <a href="{% url "xmltoexcel:conversornfscxs" %}" class="btn btn-outline-secondary btn-lg" style="float: center;
+                                                        margin-bottom: 15px; width:50%;">NFS-CXS</a>
+
+    </div>
+
+
+
+
+{% endblock %}

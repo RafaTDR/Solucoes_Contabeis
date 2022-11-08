@@ -1,0 +1,15 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+    {% load django_tables2 %}
+    <div>
+      {% for format in table.export_formats %}
+        <a href="{% export_url format %}">.{{ format }}</a>
+      {% endfor %}
+    </div>
+
+
+
+
+
+{% endblock %}
