@@ -1,12 +1,12 @@
 
 # RTR Soluções Contábeis
 
-Usanto tecnologia para desenvolver soluções e resolver desafios.
+Usando tecnologia para desenvolver soluções e resolver desafios.
 
 ## Descrição
 
 * Uma aplicação web, onde centraliza e automatiza todo o processo de solicitação de documentos para clientes. 
-* Converte NFE e CTE do formato XML para Excel e consulta via API de terceiros o CNPJ do emissor.
+* Converter NFE e CTE do formato XML para Excel e consulta via API de terceiros o CNPJ do emissor.
 
 * Teste: http://rafaeltdr.pythonanywhere.com/
 * Usuário: teste
