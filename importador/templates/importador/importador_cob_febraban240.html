@@ -1,0 +1,53 @@
+{% extends "model-page.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <a style="text-align: center; margin-bottom: 1500px; width:10%;">
+      <h3 style="color: #343a40;">Cobranças Febraban CNAB240</h3>
+      <br></br>
+  </a>
+  <form class="float-sm-right">
+
+    <div class="form-row" style="margin-upper: 1500px; align=right">
+        <div class="form-group col-xs-6" >
+
+
+        </div>
+        <div class="form-group col-xs-6">
+           <a href="{% url "importador:empresa-list" %}" type="button" class="btn btn-secondary">Editar</a>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <a href="{% url "importador:cadastrar" %}" type="button" class="btn btn-secondary">Cadastrar</a>
+        </div>
+
+    </div>
+  </form>
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+       <select name="codigo_empresa" style="margin-upper: 1500px; align=right">
+                    {% for empresa in empresas %}
+                        <option value="{{empresa}}"> {{empresa}} </option>
+                    {% endfor %}
+       </select>
+  <br></br>
+  <div class="input-group">
+    <div class="custom-file">
+      <input type="file" name="file" multiple="true" required="required" class="custom-file-input" id="inputGroupFile04">
+      <label class="custom-file-label" for="inputGroupFile04">Selecionar Arquivos</label>
+    </div>
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-outline-secondary" type="button">Gerar</button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+{% endblock %}

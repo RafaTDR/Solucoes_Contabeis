@@ -12,18 +12,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/login.css' %}" >
-    <link rel="icon" href="https://i.imgur.com/0x2ZhUo.png" >
-    <title>RTR</title>
+    <link rel="icon" href="http://periniassessoria.com.br/wp-content/uploads/2021/11/cropped-favicon-1-32x32.png" >
+    <title>Perini</title>
 
 </head>
 
 <body class="d-flex flex-column">
   <div class="sidenav" >
+
          <div class="login-main-text">
-             <h2></h2>
+             <img src="http://periniassessoria.com.br/wp-content/uploads/2021/11/perini-logo-claro2.png"
+                  class="rounded mx-auto d-block" alt="" >
          </div>
       </div>
       <div class="main">
+
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
                <form action="submit", method="POST">{% csrf_token %}

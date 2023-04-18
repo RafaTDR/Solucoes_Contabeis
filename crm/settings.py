@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-r#u&6ezr^cbm0_4@!f(u8py5ybw&e@zzku&&rw8p9u#^%&7sr9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_tables2',
     'xmltoexcel',
+    'conferencia_contabil',
+    'importador',
+    'conferencia_fiscal',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [

@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from core import views
-
+from django.conf.urls import handler404, handler500
 
 
 
@@ -30,4 +30,10 @@ urlpatterns = [
     path("login/submit", views.submit_login, name="submit_login"),
     path("customer/", include("customer.urls")),
     path("conversor/", include("xmltoexcel.urls")),
+    path("conferencias/", include("conferencia_contabil.urls")),
+    path("conferencias/", include("conferencia_fiscal.urls")),
+    path("importador/", include("importador.urls")),
 ]
+
+handler500 = 'importador.views.error_500'
+handler404 = 'importador.views.error_404'

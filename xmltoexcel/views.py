@@ -57,8 +57,14 @@ def nfe(request):
             file = File(file=upload_file, pasta=aleatorio)
 
             file.save()
+        try:
+            consultacnpj = request.POST["consultacnpj"]
+            consultacnpj = int(consultacnpj)
 
-        xmlnfe(pathxml=FileSystemStorage().path(pathxml))
+        except:
+            consultacnpj = 0
+
+        xmlnfe(pathxml=FileSystemStorage().path(pathxml), consultacnpjs=consultacnpj)
         excel = str(FileSystemStorage().path(pathxml) + ".xlsx")
 
         with open(excel, 'rb') as f:
@@ -87,8 +93,13 @@ def cte(request):
             file = File(file=upload_file, pasta=aleatorio)
 
             file.save()
+        try:
+            consultacnpj = request.POST["consultacnpj"]
+            consultacnpj = int(consultacnpj)
 
-        xmlcte(pathxml=FileSystemStorage().path(pathxml))
+        except:
+            consultacnpj = 0
+        xmlcte(pathxml=FileSystemStorage().path(pathxml), consultacnpjs = consultacnpj)
         excel = str(FileSystemStorage().path(pathxml) + ".xlsx")
 
         with open(excel, 'rb') as f:

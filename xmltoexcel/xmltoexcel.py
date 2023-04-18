@@ -3,8 +3,10 @@ import pandas as pd
 import os
 import threading
 from django.http import HttpResponse
+from .consultacnpj import consultacnpj
 
-def xmlnfe(pathxml):
+
+def xmlnfe(pathxml,consultacnpjs):
 
 
     path = pathxml
@@ -37,6 +39,9 @@ def xmlnfe(pathxml):
         vpisret = 0
         vcofinsret = 0
         vLiq = 0
+        cnpjdest = ""
+        inscricao_estadual = ""
+        ufdest = ""
 
         for ide in doc.iter('{http://www.portalfiscal.inf.br/nfe}nNF'):
 
@@ -61,6 +66,21 @@ def xmlnfe(pathxml):
             for CNPJ in emit.iter('{http://www.portalfiscal.inf.br/nfe}CNPJ'):
 
                 cnpjemit = CNPJ.text
+                if consultacnpjs == 1:
+                    simples, principais, secundarias = consultacnpj(cnpjemit)
+                else:
+                    simples, principais, secundarias = "", "", ""
+
+        for dest in doc.iter('{http://www.portalfiscal.inf.br/nfe}dest'):
+
+            for CNPJ in dest.iter('{http://www.portalfiscal.inf.br/nfe}CNPJ'):
+                cnpjdest = CNPJ.text
+
+            for UF in dest.iter('{http://www.portalfiscal.inf.br/nfe}UF'):
+                ufdest = UF.text
+
+            for IE in dest.iter('{http://www.portalfiscal.inf.br/nfe}IE'):
+                inscricao_estadual = IE.text
 
         for cobr in doc.iter('{http://www.portalfiscal.inf.br/nfe}cobr'):
             for fat in cobr.iter ('{http://www.portalfiscal.inf.br/nfe}fat'):
@@ -107,6 +127,7 @@ def xmlnfe(pathxml):
                     vbcst = 0
                     pst = 0
                     vst = 0
+                    pmvast = 0
                     # FCP ST
                     vBCFCPST = 0
                     pFCPST = 0
@@ -154,6 +175,7 @@ def xmlnfe(pathxml):
                     vOutro = 0
                     vSeg = 0
                     eXTIPI = ""
+                    cfop = ""
 
                     for NCM in det.iter('{http://www.portalfiscal.inf.br/nfe}NCM'):
 
@@ -235,6 +257,10 @@ def xmlnfe(pathxml):
                         for vICMSST in ICMS.iter ('{http://www.portalfiscal.inf.br/nfe}vICMSST'):
 
                             vst = vICMSST.text
+
+                        for pMVAST in ICMS.iter ('{http://www.portalfiscal.inf.br/nfe}pMVAST'):
+
+                            pmvast = pMVAST.text
 
                         # FCP ST
                         for vBCFCPST in ICMS.iter('{http://www.portalfiscal.inf.br/nfe}vBCFCPST'):
@@ -414,16 +440,20 @@ def xmlnfe(pathxml):
                     df.loc[df['id'] == linha, 'PRESENCA DO COMPRADOR'] = str(indPres)
                     df.loc[df['id'] == linha, 'INFORMACOES FISCO'] = str(infAdFisco)
                     df.loc[df['id'] == linha, 'INFORMACOES COMPLEMENTARES'] = str(infCpl)
-
-
-
+                    df.loc[df['id'] == linha, 'CNPJ DESTINATARIO'] = str(cnpjdest)
+                    df.loc[df['id'] == linha, 'INSCRICAO ESTADUAL DESTINATARIO'] = str(inscricao_estadual)
+                    df.loc[df['id'] == linha, 'SIMPLES'] = str(simples)
+                    df.loc[df['id'] == linha, 'ATIVIDADE PRINCIPAL'] = str(principais)
+                    df.loc[df['id'] == linha, 'ATIVIDADES SECUNDARIAS'] = str(secundarias)
+                    df.loc[df['id'] == linha, 'UF DESTINATARIO'] = str(ufdest)
+                    df.loc[df['id'] == linha, 'VALOR MVA ST'] = float(pmvast)
 
                     linha = linha + 1
 
     df.to_excel(str(savefile) + ".xlsx", index=False)
 
 
-def xmlcte(pathxml):
+def xmlcte(pathxml, consultacnpjs):
 
     path = pathxml
 
@@ -461,6 +491,11 @@ def xmlcte(pathxml):
 
             for CNPJ in emit.iter('{http://www.portalfiscal.inf.br/cte}CNPJ'):
                 cnpjemit = CNPJ.text
+                if consultacnpjs == 1:
+                    simples, principais, secundarias = consultacnpj(cnpjemit)
+                else:
+                    simples, principais, secundarias = "", "", ""
+
 
         for vRec in doc.iter('{http://www.portalfiscal.inf.br/cte}vRec'):
             vcte = vRec.text
@@ -524,6 +559,7 @@ def xmlcte(pathxml):
                     df.loc[df['id'] == linha, 'ALIQ ICMS'] = float(picms) + float(pICMSOutraUF)
                     df.loc[df['id'] == linha, 'VALOR ICMS'] = float(icmsnorm) + float(vICMSOutraUF)
                     df.loc[df['id'] == linha, 'CHAVE'] = str(chave)
+                    df.loc[df['id'] == linha, 'SIMPLES'] = str(simples)
 
                     linha = linha + 1
         else:
@@ -538,6 +574,7 @@ def xmlcte(pathxml):
             df.loc[df['id'] == linha, 'ALIQ ICMS'] = float(picms) + float(pICMSOutraUF)
             df.loc[df['id'] == linha, 'VALOR ICMS'] = float(icmsnorm) + float(vICMSOutraUF)
             df.loc[df['id'] == linha, 'CHAVE'] = str(chave)
+            df.loc[df['id'] == linha, 'SIMPLES'] = str(simples)
 
             linha = linha + 1
 
